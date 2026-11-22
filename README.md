@@ -66,14 +66,77 @@ Não é necessário instalar bibliotecas gráficas ou bibliotecas externas.
 1. Baixe o repositório pelo botão **Code > Download ZIP** no GitHub e extraia
    o conteúdo, ou clone o repositório com Git.
 2. Abra o arquivo `CETRIS.cbp` no Code::Blocks.
-3. Confira se o compilador **GNU GCC Compiler** está configurado em
-   **Settings > Compiler**.
+3. Confira se o compilador **GNU GCC Compiler** está configurado. As instruções
+   para corrigir o caminho do MinGW estão na seção seguinte.
 4. Selecione o alvo **Debug** ou **Release**.
 5. Clique em **Build and Run** ou pressione `F9`.
 
 O projeto está configurado para utilizar o padrão C99. O arquivo de recorde
 `highscore.txt` é criado automaticamente na pasta de execução quando uma nova
 pontuação supera o recorde anterior.
+
+## Solução de problemas: Code::Blocks não encontra o compilador
+
+Ao tentar compilar, o Code::Blocks pode mostrar uma mensagem parecida com esta:
+
+```text
+The compiler's setup (GNU GCC Compiler) is invalid.
+Tried to run compiler executable 'C:\MinGW/bin/gcc.exe', but failed!
+```
+
+Isso geralmente significa que o Code::Blocks está configurado para procurar o
+GCC em uma pasta que não existe ou não contém o compilador. O problema está na
+configuração do MinGW, e não necessariamente no código do CETRIS.
+
+### 1. Verificar se o MinGW foi instalado
+
+Se ainda for instalar o Code::Blocks, prefira o instalador cujo nome contém
+`mingw` (por exemplo, `codeblocks-...mingw-setup.exe`). Ele já inclui o
+compilador MinGW/GCC. Um instalador sem `mingw` pode instalar apenas o ambiente
+do Code::Blocks, sem o compilador.
+
+### 2. Detectar o compilador automaticamente
+
+1. Abra o Code::Blocks.
+2. Clique em **Settings > Compiler...**.
+3. Selecione **GNU GCC Compiler** em **Global compiler settings**.
+4. Abra a aba **Toolchain executables**.
+5. Clique em **Auto-detect**.
+6. Confira se o diretório de instalação do compilador foi preenchido com a pasta
+   correta. Clique em **OK** para salvar.
+
+Depois, tente compilar novamente com `F9`.
+
+### 3. Configurar o caminho manualmente, se o Auto-detect não funcionar
+
+1. Na aba **Toolchain executables**, localize **Compiler's installation
+   directory**.
+2. Clique no botão de procurar pasta e selecione a pasta principal do MinGW,
+   isto é, a pasta que contém a subpasta `bin`.
+3. Dentro de `bin`, confirme que existem pelo menos `gcc.exe` e `g++.exe`.
+4. Salve as configurações em **OK** e tente compilar novamente.
+
+O caminho depende de onde o Code::Blocks/MinGW foi instalado. Um exemplo comum
+é:
+
+```text
+C:\Program Files\CodeBlocks\MinGW
+```
+
+Em algumas instalações, a pasta pode estar em outro local, como
+`C:\Program Files (x86)\CodeBlocks\MinGW`. Use somente o caminho que
+realmente existe no seu computador. Não mantenha `C:\MinGW` se essa pasta não
+existir ou não tiver o arquivo `bin\gcc.exe`.
+
+**Importante:** o campo **Compiler's installation directory** deve apontar para
+a pasta principal do MinGW, e não diretamente para `bin` nem para o arquivo
+`gcc.exe`.
+
+### 4. Se o compilador não estiver instalado
+
+Se não houver uma pasta MinGW com `bin\gcc.exe`, instale novamente o Code::Blocks
+usando o instalador para Windows que inclui MinGW (o nome do arquivo contém
+`mingw`). Depois de instalar, volte às etapas de detecção automática acima.
 
 ## Compilar pelo terminal com MinGW
 
