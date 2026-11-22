@@ -1,0 +1,20 @@
+# Executaveis e arquivos compilados
+*.exe
+*.o
+*.obj
+*.a
+*.dll
+
+# Diretorios de compilacao
+/bin/
+/obj/
+/Debug/
+/Release/
+
+# Arquivos temporarios do Code::Blocks
+*.depend
+*.layout
+*.workspace
+
+# Recorde local criado durante o jogo
+highscore.txt
